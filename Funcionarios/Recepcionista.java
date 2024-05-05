@@ -31,11 +31,11 @@ public class Recepcionista extends Pessoa implements Runnable{
         Quarto quarto = hotel.obterQuartoDisponivel();
         if (quarto != null){
             quarto.definirHospede(hospede);
+            System.out.println("Hospede " + hospede.getNome() + " alugou o quarto " + quarto.getNumero());
         }else{
             System.out.println("Não há quartos disponíveis.");
         }
     }
-
     
     @Override
     public void run() {

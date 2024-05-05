@@ -7,7 +7,7 @@ import Funcionarios.Camareira;
 import Funcionarios.Recepcionista;
 
 public class Hotel {
-    private List<Recepcionista> recepcionistas;
+    public List<Recepcionista> recepcionistas;
     private List<Camareira> camareiras;
     private List<Quarto> quartos;
     private Lock lock;
@@ -20,6 +20,7 @@ public class Hotel {
         lock = new ReentrantLock(); 
         addRecepcionista(numRecepcionistas);
         addCamareiras(numCamareiras);
+        addQuartos(10);
     
     }
 

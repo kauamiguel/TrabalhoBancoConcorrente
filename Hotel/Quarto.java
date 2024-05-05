@@ -11,7 +11,6 @@ public class Quarto {
     public Quarto(int numero){
         this.lock = new ReentrantLock();
         this.numero = numero;
-        System.out.println(this.numero);
     }
 
     public int getNumero() {

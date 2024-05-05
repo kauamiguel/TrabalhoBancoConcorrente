@@ -9,10 +9,11 @@ public class Hospede extends Pessoa implements Runnable{
     Hotel hotel;
     Quarto quarto;
 
-    public Hospede(String nome, Integer idade, String cpf){
+    public Hospede(String nome, Integer idade, String cpf, Hotel hotel){
         super(nome, idade, cpf);
         this.estaNoQuarto = false;
         this.quarto = null;
+        this.hotel = hotel;
     }
 
     public void setQuarto(Quarto quarto){
