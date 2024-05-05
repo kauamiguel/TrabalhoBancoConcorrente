@@ -1,6 +1,8 @@
 package Hotel;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import Funcionarios.Camareira;
@@ -10,18 +12,31 @@ public class Hotel {
     public List<Recepcionista> recepcionistas;
     private List<Camareira> camareiras;
     private List<Quarto> quartos;
+    public Queue<Hospede> filaEspera;
     private Lock lock;
     public String hotelNome = "Hotel 5 estrelas";
+    private List<Chave> chaves;
 
     public Hotel(int numRecepcionistas, int numCamareiras, int numQuartos){
         recepcionistas = new ArrayList<>();
         camareiras = new ArrayList<>();
         quartos = new ArrayList<>();
+        this.filaEspera = new LinkedList<>();
+        chaves = new ArrayList<>();
         lock = new ReentrantLock(); 
         addRecepcionista(numRecepcionistas);
         addCamareiras(numCamareiras);
-        addQuartos(10);
-    
+        addQuartos(numQuartos);
+    }
+
+    void addChave(Chave chave) {
+        chaves.add(chave);
+    }
+
+    void removeChave(Chave chave) {
+        for (int i = 0; i < chaves.size(); i++) {
+            if (chaves.get(i).equals(chave)) {}
+        }
     }
 
     void addQuartos(int numQuartos) {
@@ -77,5 +92,10 @@ public class Hotel {
         } finally {
             lock.unlock();
         }
-    }   
+    }
+
+    public void addFilaEspera(Hospede hospede) {
+        this.filaEspera.add(hospede);
+    }
+
 }

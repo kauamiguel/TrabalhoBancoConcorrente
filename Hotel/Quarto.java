@@ -7,10 +7,13 @@ public class Quarto {
     boolean disponivel = true;
     Hospede hospede;
     Lock lock;
+    boolean estaComChave = false;
+    private  Chave chave;
 
     public Quarto(int numero){
         this.lock = new ReentrantLock();
         this.numero = numero;
+        chave = new Chave(this);
     }
 
     public int getNumero() {
@@ -29,11 +32,16 @@ public class Quarto {
         return this.disponivel;
     }
 
+    public Chave getChave() {
+        return chave;
+    }
+
     public void definirHospede(Hospede hospede){
         //Atribui um hospede e define que o quarto nao esta disponivel
         this.hospede = hospede;
         this.setQuarto();
-        System.out.println("O hospede " + hospede.getNome() + "alugou o quarto com numero " + this.numero + ".");
+       // System.out.println("O hospede " + hospede.getNome() + "alugou o quarto com numero " + this.numero + ".");
+        estaComChave = true;
     }
 
 }
