@@ -65,11 +65,11 @@ public class Hotel {
         
     }
 
-    public Quarto obterQuartoDisponivel() {
+    public Quarto obterQuartoDisponivel(Quarto quartoSegundo) {
         lock.lock();
         try {
             for (Quarto quarto : quartos) {
-                if (quarto.getDisponivel()) {
+                if (quarto.getDisponivel() && quartoSegundo != quarto) {
                     return quarto;
                 }
             }
