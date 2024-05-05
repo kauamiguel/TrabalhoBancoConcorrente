@@ -81,8 +81,8 @@ public class Hospede extends Pessoa implements Runnable{
         hotel.addFilaEspera(this);
     }
 
-    public void sairPassearQuarto() {
-        deixarChaveRecepcao();
+    public void sairPassearQuarto(Recepcionista recepcionista) {
+        deixarChaveRecepcao(recepcionista);
         System.out.println(this.getNome() + " saiu para passear e deixou a chave na recepcao");
         try {
             Thread.sleep(5000);
@@ -91,11 +91,17 @@ public class Hospede extends Pessoa implements Runnable{
         }
     }
 
-    public void deixarChaveRecepcao(){
-        hotel.addChave(chave);
+
+    public void deixarChaveRecepcao(Recepcionista recepcionista){
+        recepcionista.addChave(chave);
         // perde a referenciua da chave
         this.chave = null;
         System.out.println(chave);
+    }
+
+    public void voltarDoPasseio(Chave chave) {
+        this.chave = chave;
+        System.out.println(this.getNome() + " voltando do passeio");
     }
 
     public void setChave(Chave chave) {
@@ -105,14 +111,15 @@ public class Hospede extends Pessoa implements Runnable{
     @Override
     public void run() {
         Recepcionista recepcionista = hotel.recepcionistaDisponivel();
-
         if (recepcionista != null && tentativas > 0){
             recepcionista.alugarQuarto(this);
             // se eu tenho a chave eu posso sair para passear
             if (this.chave != null) {
                 try {
+                    sairPassearQuarto(recepcionista);
                     Thread.sleep(4000);
-                    sairPassearQuarto();
+                    // depois de um certo tempo o hospede volta do passeio e pega a chave com a recepcionista
+                    voltarDoPasseio(recepcionista.devolverChave(quarto.numero));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

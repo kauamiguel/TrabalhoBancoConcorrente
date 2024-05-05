@@ -29,14 +29,8 @@ public class Hotel {
         addQuartos(numQuartos);
     }
 
-    void addChave(Chave chave) {
-        chaves.add(chave);
-    }
-
-    void removeChave(Chave chave) {
-        for (int i = 0; i < chaves.size(); i++) {
-            if (chaves.get(i).equals(chave)) {}
-        }
+    public List<Chave> getChaves() {
+        return chaves;
     }
 
     void addQuartos(int numQuartos) {

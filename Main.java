@@ -7,7 +7,7 @@ import Funcionarios.Recepcionista;
 public class Main {
     public static void main(String[] args) {
 
-        Hotel hotel = new Hotel(5, 10, 1);
+        Hotel hotel = new Hotel(5, 10, 2);
         for (Recepcionista recepcionista : hotel.recepcionistas) {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();

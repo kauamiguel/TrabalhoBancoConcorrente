@@ -8,6 +8,7 @@ import Hotel.Hospede;
 import Hotel.Hotel;
 import Hotel.Quarto;
 import Pessoas.Pessoa;
+import Hotel.Chave;
 
 public class Recepcionista extends Pessoa implements Runnable{
     public Hotel hotel;
@@ -37,6 +38,7 @@ public class Recepcionista extends Pessoa implements Runnable{
                 if (quarto != null) {
                     quarto.definirHospede(hospede);
                     hospede.setChave(quarto.getChave());
+                    hospede.setQuarto(quarto);
                     System.out.println("Hospede " + hospede.getNome() + " alugou o quarto " + quarto.getNumero());
                 } else {
                     hospede.decrementarTentativas();
@@ -55,9 +57,11 @@ public class Recepcionista extends Pessoa implements Runnable{
                             this.hotel, pessoasSeparadas.size());
                     quarto1.definirHospede(hospede);
                     hospede.setChave(quarto1.getChave());
+                    hospede.setQuarto(quarto1);
 
                     quarto2.definirHospede(novoHospede);
                     novoHospede.setChave(quarto2.getChave());
+                    novoHospede.setQuarto(quarto2);
                     System.out.println("Hospede " + hospede.getNome() + " alugou o quarto " + quarto1.getNumero());
                     System.out.println("Hospede " + novoHospede.getNome() + " alugou o quarto " + quarto2.getNumero());
                 } else {
@@ -86,6 +90,19 @@ public class Recepcionista extends Pessoa implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addChave(Chave chave) {
+        hotel.getChaves().add(chave);
+    }
+
+    public Chave devolverChave(int numQuarto) {
+        for (Chave chave : hotel.getChaves()) {
+            if (chave.getNumeroChave().equals(numQuarto) ) {
+                return chave;
+            }
+        }
+        return null;
     }
     
     @Override
