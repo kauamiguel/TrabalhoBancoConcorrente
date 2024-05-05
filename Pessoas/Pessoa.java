@@ -10,4 +10,16 @@ public class Pessoa {
         this.cpf = cpf;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
 }
