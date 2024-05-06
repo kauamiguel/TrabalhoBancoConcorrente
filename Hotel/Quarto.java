@@ -9,11 +9,20 @@ public class Quarto {
     Lock lock;
     boolean estaComChave = false;
     private  Chave chave;
+    private boolean estaLimpando = false;
 
     public Quarto(int numero){
         this.lock = new ReentrantLock();
         this.numero = numero;
         chave = new Chave(this);
+    }
+
+    public boolean getEstaLimpando() {
+        return estaLimpando;
+    }
+
+    public void setEstaLimpando(boolean estaLimpando) {
+        this.estaLimpando = estaLimpando;
     }
 
     public int getNumero() {

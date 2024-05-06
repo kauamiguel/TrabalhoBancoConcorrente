@@ -56,7 +56,7 @@ public class Hotel {
         String[] cpf = {"121-121-121-12", "232-232-232-23", "343-343-343-34", "555-555-555-55", "666-666-666-66", "777-777-777-77", "888-888-888-88", "999-999-999-99", "101-101-101-11", "222-222-222-22"};
 
         for (int i = 0; i < numCamareiras; i++){
-            this.camareiras.add(new Camareira(names[i], idades[i], cpf[i]));
+            this.camareiras.add(new Camareira(names[i], idades[i], cpf[i], this));
         }
     }
 
@@ -65,6 +65,16 @@ public class Hotel {
         for (Recepcionista recepcionista : recepcionistas) {
             if (recepcionista.estaDisponivel()){
                 return recepcionista;
+            }
+        }
+        return null;
+    }
+
+    //Retonra a camareira que estiver livre
+    public Camareira camareiraDisponivel(){
+        for (Camareira camareira : camareiras) {
+            if (camareira.estaDisponivel()){
+                return camareira;
             }
         }
         return null;
@@ -79,6 +89,20 @@ public class Hotel {
         try {
             for (Quarto quarto : quartos) {
                 if (quarto.getDisponivel() && quartoSegundo != quarto) {
+                    return quarto;
+                }
+            }
+            return null;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public Quarto obterQuartoSujo() {
+        lock.lock();
+        try {
+            for (Quarto quarto : quartos) {
+                if (!quarto.estaComChave && !quarto.getEstaLimpando()) {
                     return quarto;
                 }
             }

@@ -1,5 +1,6 @@
 package Hotel;
 
+import Funcionarios.Camareira;
 import Funcionarios.Recepcionista;
 import Pessoas.Pessoa;
 
@@ -83,6 +84,8 @@ public class Hospede extends Pessoa implements Runnable{
 
     public void sairPassearQuarto(Recepcionista recepcionista) {
         deixarChaveRecepcao(recepcionista);
+        Camareira camareira = hotel.camareiraDisponivel();
+        camareira.limparQuarto();
         System.out.println(this.getNome() + " saiu para passear e deixou a chave na recepcao");
         try {
             Thread.sleep(5000);
@@ -96,6 +99,8 @@ public class Hospede extends Pessoa implements Runnable{
         recepcionista.addChave(chave);
         // perde a referenciua da chave
         this.chave = null;
+        // a chave foi para a recepcao
+        quarto.estaComChave = false;
         System.out.println(chave);
     }
 
@@ -119,7 +124,9 @@ public class Hospede extends Pessoa implements Runnable{
                     sairPassearQuarto(recepcionista);
                     Thread.sleep(4000);
                     // depois de um certo tempo o hospede volta do passeio e pega a chave com a recepcionista
-                    voltarDoPasseio(recepcionista.devolverChave(quarto.numero));
+                    if (!quarto.getEstaLimpando()) {
+                        voltarDoPasseio(recepcionista.devolverChave(quarto.numero));
+                    }
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

@@ -99,7 +99,9 @@ public class Recepcionista extends Pessoa implements Runnable{
     public Chave devolverChave(int numQuarto) {
         for (Chave chave : hotel.getChaves()) {
             if (chave.getNumeroChave().equals(numQuarto) ) {
-                return chave;
+                Chave chaveBackUp = chave;
+                hotel.getChaves().remove(chave);
+                return chaveBackUp;
             }
         }
         return null;
