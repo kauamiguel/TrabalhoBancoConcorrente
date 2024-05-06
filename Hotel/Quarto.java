@@ -3,18 +3,24 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Quarto {
-    int numero;
-    boolean disponivel = true;
-    Hospede hospede;
-    Lock lock;
-    boolean estaComChave = false;
+    private int numero;
+    private boolean disponivel = true;
+    private Hospede hospede;
+    private boolean estaComChave = false;
     private  Chave chave;
     private boolean estaLimpando = false;
 
     public Quarto(int numero){
-        this.lock = new ReentrantLock();
         this.numero = numero;
         chave = new Chave(this);
+    }
+
+    boolean estaComChave(){
+        return this.estaComChave;
+    }
+
+    void setEstaComChave(boolean estado){
+        this.estaComChave = estado;
     }
 
     public boolean getEstaLimpando() {

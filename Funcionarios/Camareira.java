@@ -2,6 +2,10 @@ package Funcionarios;
 
 import Pessoas.Pessoa;
 import Hotel.Hotel;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import Hotel.Chave;
 import Hotel.Quarto;
 
@@ -9,10 +13,12 @@ public class Camareira extends Pessoa implements Runnable{
     private  Hotel hotel;
     private Quarto quartoLimpando;
     private boolean estaDisponivel = true;
+    Lock lock;
 
     public Camareira(String nome, int idade, String cpf, Hotel hotel) {
         super(nome, idade, cpf);
         this.hotel = hotel;
+        this.lock = new ReentrantLock();
     }
 
     public boolean estaDisponivel(){
@@ -24,7 +30,8 @@ public class Camareira extends Pessoa implements Runnable{
     }
 
     public void limparQuarto() {
-        setDisponivel();
+       lock.lock();
+       setDisponivel();
        this.quartoLimpando = hotel.obterQuartoSujo();
         try {
             if (quartoLimpando != null) {
@@ -38,14 +45,21 @@ public class Camareira extends Pessoa implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        lock.unlock();
     }
 
     @Override
     public void run() {
-//        while (hotel.aindaHaHospedes()) {
-//            System.out.println("Entrou no WHILE -------------------");
-//            limparQuarto();
-//        }
+       while (hotel.aindaHaHospedes()) {
+           System.out.println("Camareira tentando limpar quarto");
+           try {
+            Thread.sleep(8000);
+            limparQuarto();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+       }
     }
 }
 

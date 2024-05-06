@@ -110,7 +110,7 @@ public class Hospede extends Pessoa implements Runnable{
         // perde a referenciua da chave
         this.chave = null;
         // a chave foi para a recepcao
-        quarto.estaComChave = false;
+        quarto.setEstaComChave(false);;
     }
 
     public void voltarDoPasseio(Chave chave) {
@@ -141,7 +141,7 @@ public void run() {
                     sairPassearQuarto(recepcionista);
                     Thread.sleep(4000);
                     if (!quarto.getEstaLimpando()) {
-                        voltarDoPasseio(recepcionista.devolverChave(quarto.numero));
+                        voltarDoPasseio(recepcionista.devolverChave(quarto.getNumero()));
                     }
                     Random random = new Random();
                     Thread.sleep(1000 * random.nextInt(6));

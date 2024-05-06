@@ -16,7 +16,7 @@ public class Hotel {
     private Lock lock;
     public String hotelNome = "Hotel 5 estrelas";
     private List<Chave> chaves;
-    private List<Hospede> todosHospedes; // todos os hospedes que estao no projeto para usar de controle nos whiles
+    public List<Hospede> todosHospedes; // todos os hospedes que estao no projeto para usar de controle nos whiles
     private final Object lockObject = new Object();
 
     public Hotel(int numRecepcionistas, int numCamareiras, int numQuartos){
@@ -102,7 +102,7 @@ public class Hotel {
         lock.lock();
         try {
             for (Quarto quarto : quartos) {
-                if (!quarto.estaComChave && !quarto.getEstaLimpando()) {
+                if (!quarto.estaComChave() && !quarto.getEstaLimpando()) {
                     return quarto;
                 }
             }

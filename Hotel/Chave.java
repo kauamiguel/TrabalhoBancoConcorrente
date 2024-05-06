@@ -6,7 +6,7 @@ public class Chave {
 
     public Chave(Quarto quarto) {
         this.quarto = quarto;
-        this.numeroChave = quarto.numero;
+        this.numeroChave = quarto.getNumero();
     }
 
     public Integer getNumeroChave() {
