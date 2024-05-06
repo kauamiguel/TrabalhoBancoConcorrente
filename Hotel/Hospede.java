@@ -79,7 +79,6 @@ public class Hospede extends Pessoa implements Runnable{
 
     public void fazerReclamacao() {
         System.out.println(this.getNome() + ": O hotel é muito ruim e não tem quartos disponiveis.");
-        // Mata a thread pois o hospede vai embora
         Thread.currentThread().interrupt();
     }
 
@@ -125,33 +124,40 @@ public class Hospede extends Pessoa implements Runnable{
 
     public void terminarEstadia(Recepcionista recepcionista) {
         deixarChaveRecepcao(recepcionista);
-        thread.interrupt();
         hotel.removeHospede(this);
         System.out.println(this.getNome() + " terminou o sua estadia no hotel");
+        recepcionista.chamarFilaEspera(); // Chamar a lista de espera após terminar a estadia
     }
+    
 
     @Override
-    public void run() {
-        Recepcionista recepcionista = hotel.recepcionistaDisponivel();
-        if (recepcionista != null && tentativas > 0){
+public void run() {
+    Recepcionista recepcionista = hotel.recepcionistaDisponivel();
+    if (recepcionista != null && tentativas > 0){
+        while (tentativas > 0) {
             recepcionista.alugarQuarto(this);
-            // se eu tenho a chave eu posso sair para passear
             if (this.chave != null) {
                 try {
                     sairPassearQuarto(recepcionista);
                     Thread.sleep(4000);
-                    // depois de um certo tempo o hospede volta do passeio e pega a chave com a recepcionista
                     if (!quarto.getEstaLimpando()) {
                         voltarDoPasseio(recepcionista.devolverChave(quarto.numero));
                     }
                     Random random = new Random();
-                    // entre 1 e 6 segundos ele vai embora do hotel
                     Thread.sleep(1000 * random.nextInt(6));
                     terminarEstadia(recepcionista);
+                    break; // Se a estadia for terminada com sucesso, sair do loop
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                tentativas--; // Decrementar as tentativas se a primeira tentativa falhar
             }
         }
+        if (tentativas == 0) {
+            fazerReclamacao(); // Fazer uma reclamação se todas as tentativas falharem
+        }
     }
+}
+
 }

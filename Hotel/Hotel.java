@@ -17,6 +17,7 @@ public class Hotel {
     public String hotelNome = "Hotel 5 estrelas";
     private List<Chave> chaves;
     private List<Hospede> todosHospedes; // todos os hospedes que estao no projeto para usar de controle nos whiles
+    private final Object lockObject = new Object();
 
     public Hotel(int numRecepcionistas, int numCamareiras, int numQuartos){
         recepcionistas = new ArrayList<>();
@@ -82,10 +83,6 @@ public class Hotel {
         return null;
     }
 
-    public void tentarAlugarQuarto(Hospede hospede){
-        
-    }
-
     public Quarto obterQuartoDisponivel(Quarto quartoSegundo) {
         lock.lock();
         try {
@@ -116,6 +113,7 @@ public class Hotel {
     }
 
     public void addFilaEspera(Hospede hospede) {
+        System.out.println(hospede.getNome() + " Adicionado a lista de espera");
         this.filaEspera.add(hospede);
     }
 

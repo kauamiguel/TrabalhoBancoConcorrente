@@ -78,44 +78,46 @@ public class Recepcionista extends Pessoa implements Runnable{
     public void chamarFilaEspera() {
         try {
             boolean acessoLock = lock.tryLock(5, TimeUnit.SECONDS);
-
-            if (acessoLock && !hotel.filaEspera.isEmpty()) {
-                     Hospede hospede = hotel.filaEspera.poll();
-                     alugarQuarto(hospede);
-            } else {
+    
+            if (acessoLock) {
                 Hospede hospede = hotel.filaEspera.poll();
-                hospede.sairPassearFila();
-
+                if (hospede != null) {
+                    alugarQuarto(hospede);
+                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }    
 
     public void addChave(Chave chave) {
         hotel.getChaves().add(chave);
     }
 
     public Chave devolverChave(int numQuarto) {
-        for (Chave chave : hotel.getChaves()) {
-            if (chave.getNumeroChave().equals(numQuarto) ) {
-                Chave chaveBackUp = chave;
-                hotel.getChaves().remove(chave);
-                return chaveBackUp;
+        List<Chave> chaves = hotel.getChaves();
+        for (int i = 0; i < chaves.size(); i++) {
+            Chave chave = chaves.get(i);
+            if (chave.getNumeroChave().equals(numQuarto)) {
+                chaves.remove(i); 
+                return chave;
             }
         }
         return null;
     }
     
+    
     @Override
     public void run() {
-//        try {
-//            Thread.sleep(5000);
-//            if (!hotel.filaEspera.isEmpty()) {
-//                chamarFilaEspera();
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            while(true) {
+                Thread.sleep(5000); // Espera 5 segundos antes de verificar a fila de espera
+                if (!hotel.filaEspera.isEmpty()) {
+                    chamarFilaEspera(); // Chama a fila de espera se não estiver vazia
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

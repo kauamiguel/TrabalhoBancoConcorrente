@@ -16,14 +16,13 @@ public class Main {
                 "Marcelo", "Letícia", "Felipe", "Tatiane", "Ricardo", "Débora", "Arthur", "Priscila", "Luiz", "Simone",
                 "Eduardo", "Bianca", "Caio", "Vanessa", "Alexandre", "Larissa", "Fernando", "Aline", "Matheus", "Monique"
         );
-        Hotel hotel = new Hotel(5, 10, 2);
+        Hotel hotel = new Hotel(5, 10, 5);
         for (Recepcionista recepcionista : hotel.recepcionistas) {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();
         }
 
-        for (int i = 0; i < 2; i++) {
-            // TODO: Gerar numero de companheiros aleatoramente
+        for (int i = 0; i < 10; i++) {
             Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, 3);
             Thread hospedeThread1 = new Thread(hospede);
             hotel.addHospede(hospede);
