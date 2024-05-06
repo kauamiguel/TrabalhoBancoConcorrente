@@ -1,3 +1,4 @@
+import Funcionarios.Camareira;
 import Hotel.Hotel;
 
 import Hotel.Hospede;
@@ -19,15 +20,27 @@ public class Main {
         for (Recepcionista recepcionista : hotel.recepcionistas) {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();
-        //    recepcionistaThreads.add(recepcionistaThread);
         }
 
         for (int i = 0; i < 2; i++) {
             // TODO: Gerar numero de companheiros aleatoramente
             Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, 3);
             Thread hospedeThread1 = new Thread(hospede);
+            hotel.addHospede(hospede);
             hospedeThread1.start();
         }
 
+        for (Camareira camareira : hotel.camareiras) {
+            Thread camareiraThread = new Thread(camareira);
+            try {
+                camareiraThread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        for (Camareira camareira : hotel.camareiras) {
+            Thread camareiraThread = new Thread(camareira);
+            camareiraThread.start();
+        }
     }
 }

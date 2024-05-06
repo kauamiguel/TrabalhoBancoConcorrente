@@ -6,6 +6,7 @@ import Pessoas.Pessoa;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.zip.CheckedOutputStream;
 
 public class Hospede extends Pessoa implements Runnable{
@@ -16,6 +17,7 @@ public class Hospede extends Pessoa implements Runnable{
     private int qtdCompanheiros;
     private int tentativas = 2;
     private Chave chave;
+    private Thread thread;
 
 
     public Hospede(String nome, Integer idade, String cpf, Hotel hotel, int qtdCompanheiros){
@@ -24,6 +26,15 @@ public class Hospede extends Pessoa implements Runnable{
         this.quarto = null;
         this.hotel = hotel;
         this.qtdCompanheiros = qtdCompanheiros;
+        this.thread = new Thread(this);
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public boolean isAlive() {
+        return thread.isInterrupted();
     }
 
     public void criarCompanheiros() {
@@ -84,9 +95,9 @@ public class Hospede extends Pessoa implements Runnable{
 
     public void sairPassearQuarto(Recepcionista recepcionista) {
         deixarChaveRecepcao(recepcionista);
+        System.out.println(this.getNome() + " saiu para passear e deixou a chave na recepcao");
         Camareira camareira = hotel.camareiraDisponivel();
         camareira.limparQuarto();
-        System.out.println(this.getNome() + " saiu para passear e deixou a chave na recepcao");
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -101,7 +112,6 @@ public class Hospede extends Pessoa implements Runnable{
         this.chave = null;
         // a chave foi para a recepcao
         quarto.estaComChave = false;
-        System.out.println(chave);
     }
 
     public void voltarDoPasseio(Chave chave) {
@@ -111,6 +121,13 @@ public class Hospede extends Pessoa implements Runnable{
 
     public void setChave(Chave chave) {
         this.chave = chave;
+    }
+
+    public void terminarEstadia(Recepcionista recepcionista) {
+        deixarChaveRecepcao(recepcionista);
+        thread.interrupt();
+        hotel.removeHospede(this);
+        System.out.println(this.getNome() + " terminou o sua estadia no hotel");
     }
 
     @Override
@@ -127,6 +144,10 @@ public class Hospede extends Pessoa implements Runnable{
                     if (!quarto.getEstaLimpando()) {
                         voltarDoPasseio(recepcionista.devolverChave(quarto.numero));
                     }
+                    Random random = new Random();
+                    // entre 1 e 6 segundos ele vai embora do hotel
+                    Thread.sleep(1000 * random.nextInt(6));
+                    terminarEstadia(recepcionista);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

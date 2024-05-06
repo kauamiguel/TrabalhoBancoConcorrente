@@ -27,12 +27,14 @@ public class Camareira extends Pessoa implements Runnable{
         setDisponivel();
        this.quartoLimpando = hotel.obterQuartoSujo();
         try {
-            quartoLimpando.setEstaLimpando(true);
-            System.out.println(getNome() + ": Iniciando limpeza do quarto " + quartoLimpando.getNumero());
-            Thread.sleep(2000);
-            System.out.println("Quarto " + quartoLimpando.getNumero() + " limpo.");
-            quartoLimpando.setEstaLimpando(false);
-            setDisponivel();
+            if (quartoLimpando != null) {
+                quartoLimpando.setEstaLimpando(true);
+                System.out.println(getNome() + ": Iniciando limpeza do quarto " + quartoLimpando.getNumero());
+                Thread.sleep(2000);
+                System.out.println("Quarto " + quartoLimpando.getNumero() + " limpo.");
+                quartoLimpando.setEstaLimpando(false);
+                setDisponivel();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -40,7 +42,10 @@ public class Camareira extends Pessoa implements Runnable{
 
     @Override
     public void run() {
-
+//        while (hotel.aindaHaHospedes()) {
+//            System.out.println("Entrou no WHILE -------------------");
+//            limparQuarto();
+//        }
     }
 }
 

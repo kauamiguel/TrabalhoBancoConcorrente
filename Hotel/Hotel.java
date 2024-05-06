@@ -10,17 +10,19 @@ import Funcionarios.Recepcionista;
 
 public class Hotel {
     public List<Recepcionista> recepcionistas;
-    private List<Camareira> camareiras;
+    public List<Camareira> camareiras;
     private List<Quarto> quartos;
     public Queue<Hospede> filaEspera;
     private Lock lock;
     public String hotelNome = "Hotel 5 estrelas";
     private List<Chave> chaves;
+    private List<Hospede> todosHospedes; // todos os hospedes que estao no projeto para usar de controle nos whiles
 
     public Hotel(int numRecepcionistas, int numCamareiras, int numQuartos){
         recepcionistas = new ArrayList<>();
         camareiras = new ArrayList<>();
         quartos = new ArrayList<>();
+        todosHospedes = new ArrayList<>();
         this.filaEspera = new LinkedList<>();
         chaves = new ArrayList<>();
         lock = new ReentrantLock(); 
@@ -98,6 +100,7 @@ public class Hotel {
         }
     }
 
+    // verifica se o hospede esta passeando e se nao ja tem alguma camareira limpando - retorna um quarto sujo
     public Quarto obterQuartoSujo() {
         lock.lock();
         try {
@@ -116,4 +119,21 @@ public class Hotel {
         this.filaEspera.add(hospede);
     }
 
+    public boolean aindaHaHospedes() {
+        for (Hospede hospede : todosHospedes) {
+           if(!hospede.isAlive()) {
+               return true;
+           }
+        }
+        return false;
+    }
+
+
+    public void addHospede(Hospede hospede) {
+        this.todosHospedes.add(hospede);
+    }
+
+    public void removeHospede(Hospede hospede) {
+        this.todosHospedes.remove(hospede);
+    }
 }
