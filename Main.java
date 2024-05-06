@@ -4,6 +4,8 @@ import Hotel.Hotel;
 import Hotel.Hospede;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Random;
+
 import Funcionarios.Recepcionista;
 
 public class Main {
@@ -16,14 +18,16 @@ public class Main {
                 "Marcelo", "Letícia", "Felipe", "Tatiane", "Ricardo", "Débora", "Arthur", "Priscila", "Luiz", "Simone",
                 "Eduardo", "Bianca", "Caio", "Vanessa", "Alexandre", "Larissa", "Fernando", "Aline", "Matheus", "Monique"
         );
-        Hotel hotel = new Hotel(5, 10, 5);
+        Hotel hotel = new Hotel(5, 10, 10);
         for (Recepcionista recepcionista : hotel.recepcionistas) {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();
         }
 
-        for (int i = 0; i < 10; i++) {
-            Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, 3);
+        for (int i = 0; i < 50; i++) {
+            Random random = new Random();
+            int qtdPessoas = random.nextInt(1,7);
+            Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, qtdPessoas);
             Thread hospedeThread1 = new Thread(hospede);
             hotel.addHospede(hospede);
             hospedeThread1.start();
