@@ -9,14 +9,14 @@ import Funcionarios.Camareira;
 import Funcionarios.Recepcionista;
 
 public class Hotel {
-    public List<Recepcionista> recepcionistas;
-    public List<Camareira> camareiras;
+    private List<Recepcionista> recepcionistas;
+    private List<Camareira> camareiras;
     private List<Quarto> quartos;
-    public Queue<Hospede> filaEspera;
+    private Queue<Hospede> filaEspera;
     private Lock lock;
-    public String hotelNome = "Hotel 5 estrelas";
+    private String hotelNome = "Hotel 5 estrelas";
     private List<Chave> chaves;
-    public List<Hospede> todosHospedes; // todos os hospedes que estao no projeto para usar de controle nos whiles
+    private List<Hospede> todosHospedes; // todos os hospedes que estao no projeto para usar de controle nos whiles
     private final Object lockObject = new Object();
 
     public Hotel(int numRecepcionistas, int numCamareiras, int numQuartos){
@@ -32,8 +32,20 @@ public class Hotel {
         addQuartos(numQuartos);
     }
 
+    public Queue<Hospede> getFilaEspera() {
+        return this.filaEspera;
+    }
+
     public List<Chave> getChaves() {
         return chaves;
+    }
+
+    public List<Recepcionista> getRecepcionistas(){
+        return this.recepcionistas;
+    }
+
+    public List<Camareira> getCamareiras(){
+        return this.camareiras;
     }
 
     void addQuartos(int numQuartos) {

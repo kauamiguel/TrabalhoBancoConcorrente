@@ -20,7 +20,7 @@ public class Main {
                 "Eduardo", "Bianca", "Caio", "Vanessa", "Alexandre", "Larissa", "Fernando", "Aline", "Matheus", "Monique"
         );
         Hotel hotel = new Hotel(5, 10, 10);
-        for (Recepcionista recepcionista : hotel.recepcionistas) {
+        for (Recepcionista recepcionista : hotel.getRecepcionistas()) {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();
         }
@@ -34,7 +34,7 @@ public class Main {
             hospedeThread1.start();
         }
 
-        for (Camareira camareira : hotel.camareiras) {
+        for (Camareira camareira : hotel.getCamareiras()) {
             Thread camareiraThread = new Thread(camareira);
             try {
                 camareiraThread.join();
@@ -42,7 +42,7 @@ public class Main {
                 throw new RuntimeException(e);
             }
         }
-        for (Camareira camareira : hotel.camareiras) {
+        for (Camareira camareira : hotel.getCamareiras()) {
             Thread camareiraThread = new Thread(camareira);
             camareiraThread.start();
         }

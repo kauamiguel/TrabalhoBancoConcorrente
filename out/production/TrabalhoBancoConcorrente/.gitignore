@@ -1,11 +1,3 @@
 *.class
 *.DS_Store
 *.idea
-/.classpath
-/.gitignore
-/.project
-/Funcionarios/
-/Hotel/
-/Pessoas/
-/TrabalhoBancoConcorrente.iml
-/out/

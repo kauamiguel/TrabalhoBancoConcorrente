@@ -11,7 +11,7 @@ import Pessoas.Pessoa;
 import Hotel.Chave;
 
 public class Recepcionista extends Pessoa implements Runnable{
-    public Hotel hotel;
+    private Hotel hotel;
     private Lock lock;
     boolean estaDisponivel = true;
 
@@ -81,7 +81,7 @@ public class Recepcionista extends Pessoa implements Runnable{
             boolean acessoLock = lock.tryLock(5, TimeUnit.SECONDS);
     
             if (acessoLock) {
-                Hospede hospede = hotel.filaEspera.poll();
+                Hospede hospede = hotel.getFilaEspera().poll();
                 if (hospede != null) {
                     alugarQuarto(hospede);
                 }
@@ -113,7 +113,7 @@ public class Recepcionista extends Pessoa implements Runnable{
         try {
             while(true) {
                 Thread.sleep(5000); // Espera 5 segundos antes de verificar a fila de espera
-                if (!hotel.filaEspera.isEmpty()) {
+                if (!hotel.getFilaEspera().isEmpty()) {
                     chamarFilaEspera(); // Chama a fila de espera se não estiver vazia
                 }
             }

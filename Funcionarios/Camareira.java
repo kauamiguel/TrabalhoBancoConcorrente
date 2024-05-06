@@ -5,7 +5,6 @@ import Hotel.Hotel;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
 import Hotel.Chave;
 import Hotel.Quarto;
 
@@ -13,7 +12,7 @@ public class Camareira extends Pessoa implements Runnable{
     private  Hotel hotel;
     private Quarto quartoLimpando;
     private boolean estaDisponivel = true;
-    Lock lock;
+    private Lock lock;
 
     public Camareira(String nome, int idade, String cpf, Hotel hotel) {
         super(nome, idade, cpf);
