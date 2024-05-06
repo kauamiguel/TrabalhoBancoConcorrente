@@ -36,7 +36,7 @@ public class Recepcionista extends Pessoa implements Runnable{
                 //Procurar um quarto dispinivel
                 Quarto quarto = hotel.obterQuartoDisponivel(null);
                 if (quarto != null) {
-                    System.out.println("Quantidade de pessoas no quarto: " + hospede.getQtdCompanheiros());
+                    System.out.println("Quantidade de pessoas no quarto : " + hospede.getQtdCompanheiros());
                     quarto.definirHospede(hospede);
                     hospede.setChave(quarto.getChave());
                     hospede.setQuarto(quarto);
@@ -51,7 +51,7 @@ public class Recepcionista extends Pessoa implements Runnable{
                 Quarto quarto2 = hotel.obterQuartoDisponivel(quarto1);
 
                 if (quarto1 != null && quarto2 != null) {
-                    System.out.println("Quantidade de pessoas no quarto: " + hospede.getQtdCompanheiros());
+                    System.out.println("Quantidade de pessoas em dois quartos : " + hospede.getQtdCompanheiros());
                     int qtdPessoas = hospede.getQtdCompanheiros() - 4;
                     List<Pessoa> pessoasSeparadas = hospede.separarPessoas(qtdPessoas);
                     hospede.removerPessoas(qtdPessoas);
@@ -70,7 +70,6 @@ public class Recepcionista extends Pessoa implements Runnable{
                     hospede.decrementarTentativas();
                     hotel.addFilaEspera(hospede);
                     System.out.println("Não há quartos disponíveis para as duas familias.");
-//                colocar reclamação da familia
                 }
             }
             this.lock.unlock();

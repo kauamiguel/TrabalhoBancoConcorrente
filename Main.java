@@ -3,6 +3,7 @@ import Hotel.Hotel;
 
 import Hotel.Hospede;
 import java.util.List;
+import java.util.Random;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -23,11 +24,11 @@ public class Main {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();
         }
-
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             Random random = new Random();
-            int qtdPessoas = random.nextInt(1,7);
-            Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, qtdPessoas);
+            int companheiros = random.nextInt(1, 7);
+            Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, companheiros);
+
             Thread hospedeThread1 = new Thread(hospede);
             hotel.addHospede(hospede);
             hospedeThread1.start();
