@@ -37,10 +37,10 @@ public class Recepcionista extends Pessoa implements Runnable{
                 Quarto quarto = hotel.obterQuartoDisponivel(null);
                 if (quarto != null) {
                     System.out.println("Quantidade de pessoas no quarto : " + hospede.getQtdCompanheiros());
+                    System.out.println("Hospede " + hospede.getNome() + " alugou o quarto " + quarto.getNumero());
                     quarto.definirHospede(hospede);
                     hospede.setChave(quarto.getChave());
                     hospede.setQuarto(quarto);
-                    System.out.println("Hospede " + hospede.getNome() + " alugou o quarto " + quarto.getNumero());
                 } else {
                     hospede.decrementarTentativas();
                     hotel.addFilaEspera(hospede);

@@ -20,6 +20,10 @@ public class Camareira extends Pessoa implements Runnable{
         this.lock = new ReentrantLock();
     }
 
+    public void killThread(){
+        Thread.currentThread().interrupt();
+    }
+
     public boolean estaDisponivel(){
         return this.estaDisponivel;
     }
@@ -36,7 +40,7 @@ public class Camareira extends Pessoa implements Runnable{
             if (quartoLimpando != null) {
                 quartoLimpando.setEstaLimpando(true);
                 System.out.println(getNome() + ": Iniciando limpeza do quarto " + quartoLimpando.getNumero());
-                Thread.sleep(2000);
+                Thread.sleep(5000);
                 System.out.println("Quarto " + quartoLimpando.getNumero() + " limpo.");
                 quartoLimpando.setEstaLimpando(false);
                 setDisponivel();

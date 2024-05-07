@@ -7,6 +7,8 @@ import Pessoas.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.CheckedOutputStream;
 
 public class Hospede extends Pessoa implements Runnable{
@@ -18,6 +20,7 @@ public class Hospede extends Pessoa implements Runnable{
     private int tentativas = 2;
     private Chave chave;
     private Thread thread;
+    private Lock lock;
 
 
     public Hospede(String nome, Integer idade, String cpf, Hotel hotel, int qtdCompanheiros){
@@ -27,6 +30,7 @@ public class Hospede extends Pessoa implements Runnable{
         this.hotel = hotel;
         this.qtdCompanheiros = qtdCompanheiros;
         this.thread = new Thread(this);
+        this.lock = new ReentrantLock();
     }
 
     public Thread getThread() {
@@ -85,7 +89,7 @@ public class Hospede extends Pessoa implements Runnable{
     public  void  sairPassearFila() {
         System.out.println(this.getNome() + " saiu para passear na cidade!");
         try {
-            Thread.sleep(5000);
+            Thread.sleep(13000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -157,7 +161,7 @@ public void run() {
         if (tentativas == 0) {
             fazerReclamacao(); // Fazer uma reclamação se todas as tentativas falharem
         }
-    }
+    }    
 }
 
 }

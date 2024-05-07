@@ -32,6 +32,10 @@ public class Hotel {
         addQuartos(numQuartos);
     }
 
+    public List<Hospede> getHospedes(){
+        return this.todosHospedes;
+    }
+
     public Queue<Hospede> getFilaEspera() {
         return this.filaEspera;
     }
@@ -140,7 +144,12 @@ public class Hotel {
 
 
     public void addHospede(Hospede hospede) {
-        this.todosHospedes.add(hospede);
+        lock.lock();
+        if (this.todosHospedes.size() < 10){
+            this.todosHospedes.add(hospede);
+        }
+        
+        lock.unlock();
     }
 
     public void removeHospede(Hospede hospede) {

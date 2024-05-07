@@ -9,10 +9,19 @@ public class Quarto {
     private boolean estaComChave = false;
     private  Chave chave;
     private boolean estaLimpando = false;
+    private boolean estaSujo = false;
 
     public Quarto(int numero){
         this.numero = numero;
         chave = new Chave(this);
+    }
+
+    public boolean estaSujo(){
+        return this.estaSujo;
+    }
+
+    public void setEstaSujo(boolean estaSujo){
+        this.estaSujo = estaSujo;
     }
 
     boolean estaComChave(){
