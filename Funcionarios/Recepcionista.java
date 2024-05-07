@@ -111,7 +111,11 @@ public class Recepcionista extends Pessoa implements Runnable{
     @Override
     public void run() {
         try {
+            long startTime = System.nanoTime();
             while(true) {
+                long endTime = System.nanoTime();
+                long durationInMillis = endTime - startTime;
+                if (durationInMillis > 40000000000L) break;
                 Thread.sleep(5000); // Espera 5 segundos antes de verificar a fila de espera
                 if (!hotel.getFilaEspera().isEmpty()) {
                     chamarFilaEspera(); // Chama a fila de espera se não estiver vazia

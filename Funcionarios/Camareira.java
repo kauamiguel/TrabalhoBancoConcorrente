@@ -49,7 +49,12 @@ public class Camareira extends Pessoa implements Runnable{
 
     @Override
     public void run() {
-       while (hotel.aindaHaHospedes()) {
+       long startTime = System.nanoTime();
+       while (true) {
+           long endTime = System.nanoTime();
+           long durationInMillis = endTime - startTime;
+           if (durationInMillis > 40000000000L) break;
+
            System.out.println("Camareira tentando limpar quarto");
            try {
             Thread.sleep(8000);
