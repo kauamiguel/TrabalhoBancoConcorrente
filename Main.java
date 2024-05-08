@@ -25,7 +25,7 @@ public class Main {
             Thread recepcionistaThread = new Thread(recepcionista);
             recepcionistaThread.start();
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             Random random = new Random();
             int companheiros = random.nextInt(1, 7);
             Hospede hospede = new Hospede(listaNomes.get(i), 3, "0000-00", hotel, companheiros);
